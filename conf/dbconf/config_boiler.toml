@@ -1,0 +1,12 @@
+output = "dbmodels/config/models"
+wipe = true
+no-tests = true
+
+[psql]
+dbname = "www"
+host   = "localhost"
+port   = 5432
+user   = "postgres"
+pass   = "secret"
+schema = "public"
+sslmode = "disable"

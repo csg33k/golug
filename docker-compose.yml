@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  www:
+    build:
+      context: .
+    image: safaci2000/www:latest
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    restart: always
+    env_file: .env
