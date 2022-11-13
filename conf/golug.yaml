@@ -1,0 +1,4 @@
+server:
+  address: "localhost:3000"
+  dburi: "postgres://postgres:secret@127.0.0.1:5432/www?sslmode=disable"
+

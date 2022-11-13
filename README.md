@@ -2,9 +2,11 @@
 
 The purpose of this repo is to show case a really basic REST Crud service.
 
-# Why are you using <package>?
+# Why are you using X / doing Y / Whyyyyyyy ?
 
 Cause I want to.  They're all opinionated choices and not the best or worst but should work for the use case I'm presenting. 
+
+License: I like MIT license, feel free to use anything you like. 
 
 Logging:
 

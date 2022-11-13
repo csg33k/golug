@@ -1,6 +1,8 @@
-output = "dbmodels/config/models"
+output = "dbmodels"
 wipe = true
 no-tests = true
+pkgname = "dbmodels"
+
 
 [psql]
 dbname = "www"

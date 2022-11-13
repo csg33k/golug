@@ -1,0 +1,96 @@
+basePath: /
+definitions:
+  models.LinuxUser:
+    properties:
+      distro:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Golug Demo Code
+  version: "1.0"
+paths:
+  /api/v1/users/:
+    post:
+      description: Create a New User
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LinuxUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LinuxUser'
+  /api/v1/users/{id}:
+    delete:
+      description: Retrieves a User by ID
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LinuxUser'
+    get:
+      description: Retrieves a User by ID
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LinuxUser'
+    put:
+      description: Create a New User
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LinuxUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LinuxUser'
+  /api/v1/users/list:
+    get:
+      description: List all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LinuxUser'
+swagger: "2.0"
