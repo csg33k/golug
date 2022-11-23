@@ -29,12 +29,10 @@ More DataBase Opinions:
 ## Install Packages
 
 ```sh
-## DBMate
-brew install dbmate # for mac
-##Linux
-sudo curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
-sudo chmod +x /usr/local/bin/dbmate
 ##Needed for code generation
+go install github.com/amacneil/dbmate.git@latest
 go install github.com/volatiletech/sqlboiler/v4@latest
 go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest
 ```
+
+See [quickguide](docs/00_quick_guide.md) for more.

@@ -1,6 +1,5 @@
-#swagger:
-#	swagger generate spec -o ./static/swagger.json
-
+database:
+	dbmate up
 build: clean 
 	go generate
 	go build -o www_svc
