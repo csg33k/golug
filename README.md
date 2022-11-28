@@ -24,6 +24,9 @@ More DataBase Opinions:
 
 [DBMate](https://github.com/amacneil/dbmate) Schema management, requires more writing of raw sql, but I'm a bit fan of Schema first design, so there we go.
 
+[SQLC](https://github.com/kyleconroy/sqlc) Datamodel building.  Alpha 
+
+(Deprecated)
 [SQLBoiler](github.com/volatiletech/sqlboiler/) Partly I like the SQL and wanted to play with this approach more.  DB first design. An alternative that I've heard good things about haven't explored yet is [SQLC](https://github.com/kyleconroy/sqlc)
 
 ## Install Packages
@@ -31,8 +34,7 @@ More DataBase Opinions:
 ```sh
 ##Needed for code generation
 go install github.com/amacneil/dbmate.git@latest
-go install github.com/volatiletech/sqlboiler/v4@latest
-go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest
+go install github.com/kyleconroy/sqlc/cmd/sqlc@latest
 ```
 
 See [quickguide](docs/00_quick_guide.md) for more.

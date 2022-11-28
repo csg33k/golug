@@ -20,7 +20,7 @@ import (
 // @BasePath /
 //
 //go:generate rm -fr dbmodels
-//go:generate sqlboiler --wipe psql -c conf/dbconf/config_boiler.toml
+//go:generate sqlc generate
 //go:generate swag init --parseDependency -o ./api -g main.go
 
 var (

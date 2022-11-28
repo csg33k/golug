@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	_ "github.com/lib/pq"
+	"github.com/safaci2000/golug/dbmodels"
 	"github.com/safaci2000/golug/models"
 	log "github.com/sirupsen/logrus"
 
@@ -20,7 +21,8 @@ type ServiceContract interface {
 }
 
 type MagicService struct {
-	DB *sql.DB
+	DB    *sql.DB
+	Query *dbmodels.Queries
 }
 
 var instance *MagicService
@@ -37,6 +39,7 @@ func InitializeServices(dbURI string) ServiceContract {
 		if err != nil {
 			log.Fatal(err)
 		}
+		instance.Query = dbmodels.New(instance.DB)
 	})
 
 	return instance
