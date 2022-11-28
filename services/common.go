@@ -1,7 +1,8 @@
 package services
 
 import (
-	"database/sql"
+	"context"
+	"github.com/jackc/pgx/v4"
 	_ "github.com/lib/pq"
 	"github.com/safaci2000/golug/dbmodels"
 	"github.com/safaci2000/golug/models"
@@ -21,7 +22,7 @@ type ServiceContract interface {
 }
 
 type MagicService struct {
-	DB    *sql.DB
+	DB    *pgx.Conn
 	Query *dbmodels.Queries
 }
 
@@ -35,7 +36,11 @@ func InitializeServices(dbURI string) ServiceContract {
 	doOnce.Do(func() {
 		instance = &MagicService{}
 		var err error
-		instance.DB, err = sql.Open("postgres", dbURI)
+		ctx := context.Background()
+		instance.DB, err = pgx.Connect(ctx, dbURI)
+		if err != nil {
+			log.Fatalln(err)
+		}
 		if err != nil {
 			log.Fatal(err)
 		}
