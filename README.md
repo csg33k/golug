@@ -24,6 +24,9 @@ More DataBase Opinions:
 
 [DBMate](https://github.com/amacneil/dbmate) Schema management, requires more writing of raw sql, but I'm a bit fan of Schema first design, so there we go.
 
+[Bun](https://github.com/uptrace/bun) Datamodel building.  Alpha 
+
+(Deprecated)
 [SQLBoiler](github.com/volatiletech/sqlboiler/) Partly I like the SQL and wanted to play with this approach more.  DB first design. An alternative that I've heard good things about haven't explored yet is [SQLC](https://github.com/kyleconroy/sqlc)
 
 ## Install Packages
