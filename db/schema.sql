@@ -14,13 +14,22 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: linux_distro; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.linux_distro (
+    linux_distro text NOT NULL
+);
+
+
+--
 -- Name: linux_user; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.linux_user (
     linux_user_id bigint NOT NULL,
-    linux_user_name text,
-    linux_distro text
+    linux_user_name text NOT NULL,
+    linux_distro text NOT NULL
 );
 
 
@@ -48,6 +57,22 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: linux_distro linux_distro_linux_distro_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.linux_distro
+    ADD CONSTRAINT linux_distro_linux_distro_key UNIQUE (linux_distro);
+
+
+--
+-- Name: linux_user linux_user_linux_user_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.linux_user
+    ADD CONSTRAINT linux_user_linux_user_name_key UNIQUE (linux_user_name);
+
+
+--
 -- Name: linux_user linux_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -64,6 +89,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: linux_user fk_distro_name; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.linux_user
+    ADD CONSTRAINT fk_distro_name FOREIGN KEY (linux_distro) REFERENCES public.linux_distro(linux_distro);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -73,4 +106,5 @@ ALTER TABLE ONLY public.schema_migrations
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20221110141229');
+    ('20221110141229'),
+    ('20221129182448');
