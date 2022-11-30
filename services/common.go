@@ -2,13 +2,10 @@ package services
 
 import (
 	"context"
-	"github.com/doug-martin/goqu/v9"
 	"github.com/jackc/pgx/v4/pgxpool"
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/jmoiron/sqlx"
-	_ "github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/safaci2000/golug/dbmodels"
 	log "github.com/sirupsen/logrus"
 	"sync"
@@ -23,13 +20,14 @@ type ServiceContract interface {
 	UpdateUser(user dbmodels.LinuxUser) (*dbmodels.LinuxUser, error)
 	DeleteUser(id int64) error
 	CreateUser(user dbmodels.LinuxUser) (*dbmodels.LinuxUser, error)
+	LinuxDistroCount() ([]dbmodels.GetLinuxDistroCountRow, error)
 }
 
 type MagicService struct {
-	DbPool       *pgxpool.Pool
-	query        *dbmodels.Queries //sqlc generated code.
-	queryBuilder goqu.DialectWrapper
-	dbExtended   *sqlx.DB
+	dbPool         *pgxpool.Pool
+	query          *dbmodels.Queries //sqlc generated code.
+	queryBuilder   *sqlx.DB
+	poolConnection *pgxpool.Conn
 }
 
 var instance *MagicService
@@ -38,21 +36,29 @@ func GetServices() ServiceContract {
 	return instance
 }
 
+// CleaUp: Handle connection cleanup
+func (s *MagicService) CleaUp() {
+	s.poolConnection.Release()
+	s.dbPool.Close()
+
+}
+
+// InitializeServices: initialize service and setups connection pool
 func InitializeServices(dbURI string) ServiceContract {
 	doOnce.Do(func() {
 		instance = &MagicService{}
-		instance.queryBuilder = goqu.Dialect("postgres")
-		instance.queryBuilder.Select("foobar")
-		var err error
 		ctx := context.Background()
-		instance.DbPool, err = pgxpool.Connect(ctx, dbURI)
-		instance.dbExtended, err = sqlx.Connect("postgres", dbURI)
-		connection, err := instance.DbPool.Acquire(ctx)
+		var err error
+		instance.queryBuilder, err = sqlx.Connect("pgx", dbURI)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		instance.query = dbmodels.New(connection)
-
+		instance.dbPool, err = pgxpool.Connect(ctx, dbURI)
+		instance.poolConnection, err = instance.dbPool.Acquire(ctx)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		instance.query = dbmodels.New(instance.poolConnection)
 		if err != nil {
 			log.Fatal(err)
 		}
