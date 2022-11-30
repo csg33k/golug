@@ -2,28 +2,34 @@ package services
 
 import (
 	"context"
-	"github.com/jackc/pgx/v4"
+	"github.com/doug-martin/goqu/v9"
+	"github.com/jackc/pgx/v4/pgxpool"
+	_ "github.com/jackc/pgx/v4/stdlib"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"github.com/safaci2000/golug/dbmodels"
-	"github.com/safaci2000/golug/models"
-	log "github.com/sirupsen/logrus"
 
+	"github.com/safaci2000/golug/dbmodels"
+	log "github.com/sirupsen/logrus"
 	"sync"
 )
 
 var doOnce sync.Once
 
 type ServiceContract interface {
-	ListUsers() []models.LinuxUser
-	GetUser(id int64) (*models.LinuxUser, error)
-	UpdateUser(user models.LinuxUser) (*models.LinuxUser, error)
+	ListDistributions() ([]string, error)
+	ListUsers() ([]dbmodels.LinuxUser, error)
+	GetUser(id int64) (*dbmodels.LinuxUser, error)
+	UpdateUser(user dbmodels.LinuxUser) (*dbmodels.LinuxUser, error)
 	DeleteUser(id int64) error
-	CreateUser(user models.LinuxUser) (*models.LinuxUser, error)
+	CreateUser(user dbmodels.LinuxUser) (*dbmodels.LinuxUser, error)
 }
 
 type MagicService struct {
-	DB    *pgx.Conn
-	Query *dbmodels.Queries
+	DbPool       *pgxpool.Pool
+	query        *dbmodels.Queries //sqlc generated code.
+	queryBuilder goqu.DialectWrapper
+	dbExtended   *sqlx.DB
 }
 
 var instance *MagicService
@@ -35,16 +41,21 @@ func GetServices() ServiceContract {
 func InitializeServices(dbURI string) ServiceContract {
 	doOnce.Do(func() {
 		instance = &MagicService{}
+		instance.queryBuilder = goqu.Dialect("postgres")
+		instance.queryBuilder.Select("foobar")
 		var err error
 		ctx := context.Background()
-		instance.DB, err = pgx.Connect(ctx, dbURI)
+		instance.DbPool, err = pgxpool.Connect(ctx, dbURI)
+		instance.dbExtended, err = sqlx.Connect("postgres", dbURI)
+		connection, err := instance.DbPool.Acquire(ctx)
 		if err != nil {
 			log.Fatalln(err)
 		}
+		instance.query = dbmodels.New(connection)
+
 		if err != nil {
 			log.Fatal(err)
 		}
-		instance.Query = dbmodels.New(instance.DB)
 	})
 
 	return instance

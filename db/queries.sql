@@ -25,3 +25,13 @@ UPDATE public.linux_user
       linux_user_name = $2, 
       linux_distro = $3
 WHERE linux_user_id  = $1;
+
+-- name: GetLinuxDistros :many
+SELECT linux_distro FROM public.linux_distro
+order by linux_distro;
+
+
+-- name: GetLinuxDistro :one
+SELECT linux_distro FROM public.linux_distro
+where linux_distro = $1
+limit 1;

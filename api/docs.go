@@ -16,6 +16,25 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/distros/list": {
+            "get": {
+                "description": "List all users",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/users/": {
             "post": {
                 "description": "Create a New User",
@@ -29,7 +48,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 ],
@@ -37,7 +56,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 }
@@ -53,7 +72,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 }
@@ -78,7 +97,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 }
@@ -102,7 +121,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 ],
@@ -110,7 +129,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 }
@@ -133,7 +152,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LinuxUser"
+                            "$ref": "#/definitions/dbmodels.LinuxUser"
                         }
                     }
                 }
@@ -141,16 +160,16 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.LinuxUser": {
+        "dbmodels.LinuxUser": {
             "type": "object",
             "properties": {
-                "distro": {
+                "linuxDistro": {
                     "type": "string"
                 },
-                "id": {
+                "linuxUserID": {
                     "type": "integer"
                 },
-                "name": {
+                "linuxUserName": {
                     "type": "string"
                 }
             }

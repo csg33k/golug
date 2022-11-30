@@ -1,12 +1,12 @@
 basePath: /
 definitions:
-  models.LinuxUser:
+  dbmodels.LinuxUser:
     properties:
-      distro:
+      linuxDistro:
         type: string
-      id:
+      linuxUserID:
         type: integer
-      name:
+      linuxUserName:
         type: string
     type: object
 info:
@@ -14,6 +14,18 @@ info:
   title: Golug Demo Code
   version: "1.0"
 paths:
+  /api/v1/distros/list:
+    get:
+      description: List all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
   /api/v1/users/:
     post:
       description: Create a New User
@@ -23,14 +35,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/models.LinuxUser'
+          $ref: '#/definitions/dbmodels.LinuxUser'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LinuxUser'
+            $ref: '#/definitions/dbmodels.LinuxUser'
   /api/v1/users/{id}:
     delete:
       description: Retrieves a User by ID
@@ -46,7 +58,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LinuxUser'
+            $ref: '#/definitions/dbmodels.LinuxUser'
     get:
       description: Retrieves a User by ID
       parameters:
@@ -61,7 +73,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LinuxUser'
+            $ref: '#/definitions/dbmodels.LinuxUser'
     put:
       description: Create a New User
       parameters:
@@ -75,14 +87,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/models.LinuxUser'
+          $ref: '#/definitions/dbmodels.LinuxUser'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LinuxUser'
+            $ref: '#/definitions/dbmodels.LinuxUser'
   /api/v1/users/list:
     get:
       description: List all users
@@ -92,5 +104,5 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LinuxUser'
+            $ref: '#/definitions/dbmodels.LinuxUser'
 swagger: "2.0"
