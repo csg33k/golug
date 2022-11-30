@@ -29,7 +29,7 @@ var (
 
 func main() {
 	wwwSrv := services.InitializeServices(appConfig.Server.DatabaseUri)
-	defer wwwSrv.(*services.MagicService).DbPool.Close()
+	defer wwwSrv.(*services.MagicService).CleaUp()
 	ctx := context.Background()
 	context.WithValue(ctx, "db", wwwSrv)
 	r := chi.NewRouter()
@@ -47,7 +47,11 @@ func main() {
 		r.Post("/", www.CreateUser)
 		r.Put("/{id}", www.UpdateUser)
 	})
-	r.Get("/api/v1/distros/list", www.ListDistros)
+	r.Route("/api/v1/distro", func(r chi.Router) {
+		r.Get("/list", www.ListDistros)
+		r.Get("/count", www.ListDistroCount)
+	})
+
 	r.Get("/", www.Redirect("/swaggerui/"))
 
 	//Static Mount generated files
