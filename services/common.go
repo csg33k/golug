@@ -2,13 +2,15 @@ package services
 
 import (
 	"context"
+
 	"github.com/jackc/pgx/v4/pgxpool"
 	_ "github.com/jackc/pgx/v4/stdlib"
 
-	"github.com/jmoiron/sqlx"
-	"github.com/safaci2000/golug/dbmodels"
-	log "github.com/sirupsen/logrus"
 	"sync"
+
+	"github.com/csg33k/golug/dbmodels"
+	"github.com/jmoiron/sqlx"
+	log "github.com/sirupsen/logrus"
 )
 
 var doOnce sync.Once

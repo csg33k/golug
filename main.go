@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/safaci2000/golug/services"
 	"net/http"
 
-	"github.com/safaci2000/golug/config"
-	"github.com/safaci2000/golug/www"
+	"github.com/csg33k/golug/services"
+
+	"github.com/csg33k/golug/config"
+	"github.com/csg33k/golug/www"
 	log "github.com/sirupsen/logrus"
 
 	httpSwagger "github.com/swaggo/http-swagger"

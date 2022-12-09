@@ -4,7 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/safaci2000/golug/dbmodels"
+
+	"github.com/csg33k/golug/dbmodels"
 )
 
 func (s *MagicService) ListUsers() ([]dbmodels.LinuxUser, error) {

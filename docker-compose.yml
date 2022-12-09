@@ -3,7 +3,7 @@ services:
   www:
     build:
       context: .
-    image: safaci2000/www:latest
+    image: csg33k/www:latest
     ports:
       - "3000:3000"
   db:

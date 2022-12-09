@@ -1,4 +1,4 @@
-module github.com/safaci2000/golug
+module github.com/csg33k/golug
 
 go 1.19
 

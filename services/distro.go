@@ -2,7 +2,8 @@ package services
 
 import (
 	"context"
-	"github.com/safaci2000/golug/dbmodels"
+
+	"github.com/csg33k/golug/dbmodels"
 	log "github.com/sirupsen/logrus"
 )
 
