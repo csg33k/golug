@@ -34,6 +34,7 @@ make build
 go generate
 ```
 
+```
 sample output:
 2022/11/23 17:36:12 Generate swagger docs....
 2022/11/23 17:36:12 Generate general API Info, search dir:./
@@ -41,6 +42,7 @@ sample output:
 2022/11/23 17:36:14 create docs.go at  api/docs.go
 2022/11/23 17:36:14 create swagger.json at  api/swagger.json
 2022/11/23 17:36:14 create swagger.yaml at  api/swagger.yaml
+```
 
 #### Build binary 
 go build -o www_svc
